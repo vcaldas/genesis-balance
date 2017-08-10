@@ -1,5 +1,7 @@
 # genesis-balance
-Very simple script to analyse the Genesis mining payouts.
+Very simple script to analyse the [Genesis mining](https://www.genesis-mining.com/a/952476) payouts.
+Use the code **Hrm123** to get 3% bonus!
+
 
 
 
