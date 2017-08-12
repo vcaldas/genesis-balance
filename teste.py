@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Aug 13 00:18:10 2017
+
+@author: caldas
+"""
+
+#!/usr/bin/env python3
 """
 Created on Sat Aug 12 20:26:40 2017
 
@@ -22,15 +30,18 @@ import datetime as dt
 import pandas as pd
 
 # Creating dataframe to save data.
-columns = ["date", "coin", "value", "wallet", "paid"]
+columns = ["date", "coin", "value", "wallet", "hash"]
 col_names_payout = ['total', 'paid', 'balance', 'last payment', 'last payout' ]
 
 
 df = pd.DataFrame(columns = columns)
 
-url = "https://www.genesis-mining.com/transactions/index/page"
-driver = webdriver.Firefox(executable_path = '/usr/local/bin/geckodriver')
-driver.get("https://www.genesis-mining.com/en")
+#url = "https://www.genesis-mining.com/transactions/index/page"
+#driver = webdriver.Firefox(executable_path = '/usr/local/bin/geckodriver')
+#driver.get("https://www.genesis-mining.com/en")
+
+with open("index2.html", 'rb') as fp:
+    soup = BeautifulSoup(fp, 'html.parser')
 
 
 def append_data(soup, df):
@@ -45,34 +56,25 @@ def append_data(soup, df):
     return df
 
 
-try:
-    element = WebDriverWait(driver, 100).until(
-        EC.presence_of_element_located((By.ID, "current-mining"))
-    )
-finally:
+#try:
+#    element = WebDriverWait(driver, 100).until(
+#        EC.presence_of_element_located((By.ID, "current-mining"))
+#    )
+#finally:
     # Get number of pages to loop through
-    print("Parsing page %s." % 1)
-    driver.get(url+str(1))
-    source = driver.page_source.encode('utf-8')
-    soup = BeautifulSoup(source, 'html.parser')
+print("Parsing page %s." % 1)
+#driver.get(url+str(1))
+#source = driver.page_source.encode('utf-8')
+#soup = BeautifulSoup(source, 'html.parser')
     
-    pages = str(soup.findAll("p", { "class" : "pager-info" }))
-    start = pages.find("Page 1 of ")
-    end = pages.find(", showing" )
-    npages =  int(pages[start+10: end])
+
     
-   
-    for current in range(1, npages):
-        print("Parsing page %s out of %s." % (current, npages))
-        driver.get(url+str(current))
-        
-        source = driver.page_source.encode('utf-8')
-        soup = BeautifulSoup(source, 'html.parser')
-        df = append_data(soup, df)
+df = append_data(soup, df)
+
        
         
     
-driver.quit()
+#driver.quit()
 
 ### Working on Dataframe
 
@@ -84,28 +86,6 @@ df['date'] = df['date'].apply(lambda x: dt.datetime.strftime(x, '%d-%m-%Y'))
 # Get all coins
 my_coins = df.coin.unique()
 print(my_coins)
-
-# Create a new dataframe
-payouts = pd.DataFrame(index = df.coin.unique(), columns = col_names_payout)
-
-## add values to the payout dataframe
-#for row in payouts.iterrows():
-#    coin =  row[0]; 
-#    my_df  = df.loc[df.coin == coin]
-#     
-#   
-#    payouts.set_value(coin, 'total', my_df.payout.sum())
-#    
-#    paid = df.payout.loc[(df.coin == coin) & (df.paid == True)].sum()
-#
-#    payouts.set_value(coin, 'value', my_df.payout.loc[my_df.paid == True].sum())
-#    
-#    payouts.set_value(coin, 'last payment', my_df.date.max())
-#
-#    payouts.set_value(coin, 'last payout',  my_df.loc[my_df.paid == True].date.max())
-#    
-#    
-#payouts.balance = payouts.total - payouts.paid
 
 
 print(df)
