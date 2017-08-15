@@ -7,7 +7,7 @@ Use the code **Hrm123** to get 3% bonus!
 
 ## Requirements
   - Python 3 (requires pandas)
-  
+
 # Usage
 $ python genesis.py FILENAME
 
@@ -25,22 +25,18 @@ The code takes a tab-separated-file containing the payouts from Genesis Mining. 
     - Selenium and geckobrowser
 
 Simply run the code
-$python atuo-genesis.py
+$python auto-genesis.py
 
 A new instance of 'Firefox' will open. Other browsers might be added if requests appear.
-After your succesful login, the pages with payouts are downloades.
+After your succesful login, the pages with payouts are downloaded.Please, do wait until it runs. It should take just few seconds.
 
-Current suppor:  OSX
+Current support:  OSX
 
 
 Outputs:
     - source.csv :  all the data from the Genesis Mining
     - payout.csv : analysed data.
-    
+
 
 
 Use the [ISSUES](https://github.com/cryptotrade/genesis-balance/issues) section to report any bug or request.
-
-
-
-
